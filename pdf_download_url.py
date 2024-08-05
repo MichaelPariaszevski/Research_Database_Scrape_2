@@ -23,7 +23,9 @@ def download_to_view():
         elif "download" not in i:
             pdf_urls.append(i)
 
-    return download_pdf_urls, pdf_urls, additional
+    # merged_lists = pdf_urls.extend(download_pdf_urls)
+
+    return download_pdf_urls, pdf_urls, download_pdf_urls+pdf_urls, additional
 
 
 # example_download_pdf_urls = download_to_view()
@@ -34,7 +36,7 @@ def download_to_view():
 
 
 def replace_download_view():
-    download_pdf_urls, pdf_urls, additional = download_to_view()
+    download_pdf_urls, pdf_urls, merged_lists, additional = download_to_view()
 
     view_pdf_urls = []
 
@@ -42,10 +44,10 @@ def replace_download_view():
         view_url = i.replace("download", "view")
         view_pdf_urls.append(view_url)
 
-    return view_pdf_urls, pdf_urls, additional
+    return view_pdf_urls, pdf_urls, merged_lists, additional
 
 
-example_view_pdf_urls, example_pdf_urls, example_additional = replace_download_view()
+example_view_pdf_urls, example_pdf_urls, example_merged_lists, example_additional = replace_download_view()
 
 for url in example_view_pdf_urls:
     print(url)

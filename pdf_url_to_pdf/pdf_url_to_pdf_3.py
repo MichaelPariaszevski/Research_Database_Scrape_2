@@ -12,7 +12,7 @@ def get_pdf_from_url(url):
         :param url: url to get pdf file
         :return: PdfFileReader object
         """
-        remote_file = urlopen(Request(url), context=context).read()
+        remote_file = urlopen(Request(url)).read()
         memory_file = io.BytesIO(remote_file)
         pdf_file = PdfReader(memory_file)
         return pdf_file
