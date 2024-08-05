@@ -9,3 +9,11 @@ with open("pdf_folder", 'wb') as fd:
 #     response=requests.get(url=url)
 #     response_decoded=response.decode(encoding="utf-8")
 #     fd.write(response_decoded)
+
+url_2="https://www.journals.ac.za/index.php/sajhe/article/view/1602/1848" 
+
+response=requests.get(url=url_2, stream=True) 
+
+with open("pdf_folder_2", "wb") as fd: 
+    for chunk in response.iter_content(chunk_size=1500): 
+        fd.write(chunk)

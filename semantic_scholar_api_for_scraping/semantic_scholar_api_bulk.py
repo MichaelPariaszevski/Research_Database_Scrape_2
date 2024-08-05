@@ -15,9 +15,9 @@ def semantic_scholar_bulk_api():
     response = requests.get(url=url, params=query_params, headers=headers)
 
     if response.status_code == 200:
-        print(f"Request was successful, status code: {response.status_code}")
+        status_code=f"Request was successful, status code: {response.status_code}"
     else:
-        print(f"Request was unsuccessful, status code: {response.status_code}")
+        status_code=f"Request was unsuccessful, status code: {response.status_code}"
 
     response_loaded=json.loads(response.content)
     
@@ -27,10 +27,10 @@ def semantic_scholar_bulk_api():
         if i["openAccessPdf"] is not None: 
             pdf_url_list.append(i["openAccessPdf"]["url"])
 
-    return response_loaded, pdf_url_list
+    return response_loaded, pdf_url_list, status_code
 
 
-example_response, example_pdf_url_list = semantic_scholar_bulk_api()
+example_response, example_pdf_url_list, status_code = semantic_scholar_bulk_api()
 
 print(example_response)
 print("-"*100) 
