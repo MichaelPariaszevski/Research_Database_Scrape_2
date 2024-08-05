@@ -29,3 +29,6 @@ headers = {
 response = requests.get(url=url, headers=headers)    
 response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
 print(response.status_code)
+print("-"*100) 
+print(response.content.decode())
+

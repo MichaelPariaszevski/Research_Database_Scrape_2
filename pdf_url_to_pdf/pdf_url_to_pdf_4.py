@@ -4,7 +4,7 @@ from urllib.request import Request, urlopen
 import requests
 
 from pypdf import PdfReader
-from pypdf.errors import PdfStreamError
+from pypdf.errors import PdfStreamError, EmptyFileError
 
 import ssl
 
@@ -12,6 +12,7 @@ context = ssl._create_unverified_context()
 
 import sys
 import os
+import time
 
 sys.path.append(os.getcwd())  # In Ubuntu, this line is necessary as well
 
@@ -56,15 +57,30 @@ def get_pdf_from_url_exception_2(url):
     pdf_file = PdfReader(memory_file)
     return pdf_file
 
+def get_pdf_from_url_exception_3(url):
+    """
+    :param url: url to get pdf file
+    :return: PdfFileReader object
+    """
+    
+    request=Request(url=url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0"})
+    remote_file = urlopen(url=request, timeout=(120, 25)).read()
+    memory_file = io.BytesIO(remote_file)
+    pdf_file = PdfReader(memory_file)
+    return pdf_file
+
 
 def extract_text_from_pdf(url):
     try:
         pdf = get_pdf_from_url(url)
     except HTTPError:
-        pdf = get_pdf_from_url_exception_2(url)
+        try: 
+            pdf = get_pdf_from_url_exception_2(url)
+        except HTTPError: 
+            return None
     except URLError:
         pdf = get_pdf_from_url_exception(url)
-    except PdfStreamError:
+    except PdfStreamError or EmptyFileError:
         return None
 
     extracted_pdf = []
